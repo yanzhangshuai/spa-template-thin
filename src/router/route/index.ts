@@ -1,5 +1,6 @@
-import { flatMap } from 'lodash-es';
-import { RouteRecordRaw } from 'vue-router';
+import { flatten } from 'ramda';
+import type { RouteRecordRaw } from 'vue-router';
+import { HomeRouteName } from './modules/home/const';
 import { isArray } from '@/util/is';
 import { moduleFilter } from '@/util/helper';
 
@@ -10,7 +11,7 @@ import { moduleFilter } from '@/util/helper';
 const findModuleRoutes = (): Array<RouteRecordRaw> => {
   const modules = moduleFilter<Array<RouteRecordRaw> | RouteRecordRaw>(import.meta.globEager('./modules/*/index.ts'));
 
-  return flatMap(
+  return flatten(
     Object.keys(modules).map((key) => {
       const module: Array<RouteRecordRaw> | RouteRecordRaw = modules[key] as Array<RouteRecordRaw> | RouteRecordRaw;
       return isArray(module) ? module : [module];
@@ -20,11 +21,11 @@ const findModuleRoutes = (): Array<RouteRecordRaw> => {
 
 const moduleRoutes = findModuleRoutes();
 
-export const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteRecordRaw> = [
   ...moduleRoutes,
   {
     path: '/',
-    redirect: '/home'
+    redirect: HomeRouteName.DEFAULT_ROUTER
   }
 ];
 

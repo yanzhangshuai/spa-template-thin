@@ -1,11 +1,18 @@
-import { App, Directive } from 'vue';
+import type { App, Directive, Plugin } from 'vue';
 import { moduleFilter } from '@/util/helper';
+
+const DirectivePlugin: Plugin = {
+  install(app: App) {
+    injectDirectives(app);
+  }
+};
+
+export default DirectivePlugin;
 
 function injectDirectives(app: App<Element>) {
   const modules = moduleFilter<Directive>(import.meta.globEager('./modules/**/*.{ts,js}'));
 
   //  匹配文件名称的正则
-  //TODO 正则没有全部满足
   const directiveRegex = /\/([\w\d-]+)([.-]?[dD]irective)?\/([\w\d-]+)([.-]?[dD]irective)?\.[tj]s$/;
 
   Object.keys(modules).forEach((key) => {
@@ -20,9 +27,4 @@ function injectDirectives(app: App<Element>) {
 
     app.directive(directiveName, directive);
   });
-}
-
-export function setupDirective(app: App<Element>): App<Element> {
-  injectDirectives(app);
-  return app;
 }

@@ -1,5 +1,6 @@
 import { unref } from 'vue';
-import { Router, useRouter } from 'vue-router';
+import type { Router } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 export function useReload(router?: Router): PromiseFn<never, boolean> {
   let _router: Router;
@@ -7,6 +8,7 @@ export function useReload(router?: Router): PromiseFn<never, boolean> {
 
   const { push, currentRoute } = router || _router;
   const { query, params } = currentRoute.value;
+
   return (): Promise<boolean> => {
     return new Promise((resolve) => {
       push({

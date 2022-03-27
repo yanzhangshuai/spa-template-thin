@@ -1,29 +1,19 @@
+import 'windi.css';
 import { createApp } from 'vue';
-import { setupStore } from '@/store';
-import { setupPlugin } from '@/plugin';
-import { setupService } from './service';
-import { setupComponent } from '@/component';
-import { setupDirective } from '@/directive';
-import { isReady, setupRouter } from '@/router';
+import Service from './service';
+import Store from '@/store';
+import Plugin from '@/plugin';
+import Component from '@/component';
+import Directive from '@/directive';
+import Router from '@/router';
 import App from '@/page/app.vue';
-import 'virtual:windi.css';
 import '@/asset/style/index.less';
 
 const app = createApp(App);
 
-setupPlugin(app);
-
-setupComponent(app);
-
-setupDirective(app);
-
-setupRouter(app);
-
-setupService(app);
-
-setupStore(app);
-
-//  等待router
-isReady().then(() => {
-  app.mount('#app');
-});
+app.use(Plugin)
+  .use(Component)
+  .use(Directive)
+  .use(Router, () => app.mount('#app'))
+  .use(Service)
+  .use(Store);

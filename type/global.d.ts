@@ -1,8 +1,10 @@
-// declare module "*.json" {
-//   const value: unknown;
-//   export default value;
-// }
-export {};
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare module '*.json' {
+  const value: unknown;
+  export default value;
+}
+
+export { };
 declare global {
   /**
    * 属性可写
@@ -44,7 +46,6 @@ declare global {
 
   type Nullable<T> = T | null;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   type Recordable<T = any> = Record<string, T>;
 
   type ValueType = string | number | boolean | undefined | null | Symbol;
@@ -58,14 +59,12 @@ declare global {
    */
   type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   interface Fn<T = any, R = T> {
-    (...arg: Array<T>): R;
+    (...arg: Array<T>): R
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   interface PromiseFn<T = any, R = T> {
-    (...arg: Array<T>): Promise<R>;
+    (...arg: Array<T>): Promise<R>
   }
 
   type RefType<T> = T | null;
@@ -75,7 +74,7 @@ declare global {
   type TargetContext = '_self' | '_blank';
 
   interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
-    $el: T;
+    $el: T
   }
 
   type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;

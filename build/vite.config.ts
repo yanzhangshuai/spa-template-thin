@@ -1,17 +1,20 @@
-import { ConfigEnv, loadEnv, UserConfig } from 'vite';
-import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-import packageJson from '../package.json';
-import { wrapperEnv } from './util/helper';
-import { configPath, resolve, root } from './util/path';
+import { resolve } from 'path';
+import type { ConfigEnv } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
+import { version } from '../package.json';
+import type { Mode } from './type/vite';
+import { wrapperEnv } from './util/env';
+import { configPath, root } from './util/path';
+import { alias } from './vite/alias';
 import { createProxy } from './vite/proxy';
 import { createVitePlugins } from './vite/plugin';
 import { assetFileNames, chunkFileNames, entryFileNames, manualChunks } from './vite/output';
 
-export default ({ mode }: ConfigEnv): UserConfig => {
-  const isBuild = mode === 'production';
+export default defineConfig((conf: ConfigEnv) => {
+  const mode = conf.mode as Mode;
 
   // 设置版本号
-  process.env.GLOBAL_VERSION = packageJson.version;
+  process.env.GLOBAL_APP_VERSION = version;
 
   // 根据VITE命令设置NODE环境变量
   process.env.NODE_ENV = mode;
@@ -23,7 +26,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   return {
     base: viteEnv.VITE_PUBLIC_PATH || '/',
 
-    root: root,
+    root,
 
     envDir: configPath,
 
@@ -34,7 +37,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     css: {
-      postcss: resolve('/build/postcss.config.js'),
+      postcss: resolve('build/postcss.config.js'),
       modules: {
         scopeBehaviour: 'local',
         localsConvention: 'camelCaseOnly'
@@ -48,7 +51,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         }
       }
     },
-    plugins: createVitePlugins(isBuild, viteEnv),
+
+    plugins: createVitePlugins(mode, viteEnv),
 
     build: {
       target: viteEnv.VITE_BUILD_TARGET || 'es2015',
@@ -65,13 +69,18 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       brotliSize: false,
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
-        plugins: [dynamicImportVars()],
+        plugins: [],
 
-        output: { entryFileNames: entryFileNames, chunkFileNames: chunkFileNames, manualChunks: manualChunks, assetFileNames: assetFileNames }
+        output: {
+          entryFileNames,
+          chunkFileNames,
+          manualChunks,
+          assetFileNames
+        }
       }
     },
 
-    server: !isBuild && {
+    server: mode === 'development' && {
       open: viteEnv.VITE_SERVER_OPEN !== false,
       host: true,
       hmr: true,
@@ -81,11 +90,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     resolve: {
-      alias: {
-        '@': resolve('src')
-      },
-      mainFields: ['index', 'module', 'jsnext:main', 'jsnext'],
-      extensions: ['.vue', '.ts', '.tsx', '.json', '.jsx', '.mjs', '.js']
+      alias: alias(),
+      mainFields: ['index', 'module', 'jsnext'],
+      extensions: ['.ts', '.tsx', '.json', '.jsx', '.mjs', '.js']
     }
   };
-};
+});

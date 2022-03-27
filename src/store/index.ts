@@ -1,33 +1,29 @@
-import { App } from 'vue';
-import { debounce } from 'lodash-es';
-import { createPinia, Pinia } from 'pinia';
+import type { App, Plugin } from 'vue';
+import { debounce } from 'ts-debounce';
+import { createPinia } from 'pinia';
+import { PiniaStorage } from '@mwjz/pinia-storage';
+import { PiniaDebounce } from '@pinia/plugin-debounce';
 
-export type Store = Pinia;
+const StorePlugin: Plugin = {
+  install(app: App) {
+    const store = create();
+    if (!store)
+      return;
 
-let store: Store;
+    app.use(store);
+  }
+};
 
-export function setupStore(app: App<Element>): App<Element> {
+export default StorePlugin;
+
+function create() {
   const store = createPinia();
 
   store.name = 'pinia';
 
-  store.use(({ options, store }) => {
-    if (options.debounce) {
-      return Object.keys(options.debounce).reduce(
-        (debouncedActions, action) => {
-          debouncedActions[action] = debounce(store[action], options.debounce[action]);
-          return debouncedActions;
-        },
-        {} as {
-          [k in keyof typeof options.actions]: Function;
-        }
-      );
-    }
-  });
-  app.use(store);
-  return app;
-}
+  store.use(PiniaDebounce(debounce));
 
-export function useStore(): Readonly<Store> {
+  store.use((PiniaStorage({ prefix: 'spa-template_' })));
+
   return store;
 }

@@ -1,12 +1,12 @@
-import { Plugin } from 'vite';
+import type { Plugin } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import { PluginFn } from '../type';
+import type { PluginFn } from '../../../build/type/vite';
 
-export const htmlPlugin: PluginFn = (isBuild, env) => {
+export const htmlPlugin: PluginFn = (mode) => {
   return (createHtmlPlugin({
-    minify: isBuild,
+    minify: mode === 'production',
     template: 'index.html',
     entry: '/src/main.ts',
-    inject: { data: { title: env.VITE_APP_TITLE } }
+    inject: { data: { } }
   }) || []) as Plugin[];
 };

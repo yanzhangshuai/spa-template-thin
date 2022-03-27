@@ -1,15 +1,13 @@
-import { App } from 'vue';
+import type { App } from 'vue';
+import config from '@/config';
 import { dateFormat } from '@/util/date';
-import { GlobalProps } from './type';
 
 let globalProps: GlobalProps;
 
 export function setupGlobalProperty(app: App<Element>): App<Element> {
   globalProps = {
-    VERSION: import.meta.env.GLOBAL_VERSION,
-    FILE_PATH_PREFIX: import.meta.env.GLOBAL_FILE_PATH,
     DEV: import.meta.env.DEV,
-    dateFormat: dateFormat
+    dateFormat
   };
 
   Object.defineProperty(app.config.globalProperties, '$window', {
@@ -23,6 +21,13 @@ export function setupGlobalProperty(app: App<Element>): App<Element> {
     enumerable: false,
     get() {
       return globalProps;
+    }
+  });
+
+  Object.defineProperty(app.config.globalProperties, '$config', {
+    enumerable: false,
+    get() {
+      return config;
     }
   });
   return app;

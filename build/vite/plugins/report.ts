@@ -1,15 +1,15 @@
 import visualizer from 'rollup-plugin-visualizer';
-import { PluginFn } from '../type';
+import type { PluginFn } from '../../../build/type/vite';
 
-export const reportPlugin: PluginFn = (isBuild, env) => {
-  return {
-    ...visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-      template: 'treemap', // "sunburst" | "treemap" | "network",
-      filename: './report/dependence/index.html'
-    }),
-    apply: () => env.VITE_REPORT
-  };
+export const reportPlugin: PluginFn = (_mode, env) => {
+  if (!env.VITE_REPORT)
+    return [];
+
+  return visualizer({
+    open: true,
+    gzipSize: true,
+    brotliSize: true,
+    template: 'treemap', // "sunburst" | "treemap" | "network",
+    filename: './report/libs/index.html'
+  });
 };

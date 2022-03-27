@@ -21,17 +21,15 @@ export const useUserStore = defineStore({
           return;
         }
 
-        setTimeout(() => {
-          this.token = '123';
-          resolve(this.token);
-        }, 1000);
+        // TODO：模拟登录
+        this.token = '0-1-2-3-4-5-6-7-8-9';
       });
     },
 
     /**
      * 登录
      */
-    login() {},
+    login() { },
 
     /**
      * 登出
@@ -40,5 +38,8 @@ export const useUserStore = defineStore({
     logout() {
       // goLogin && router.push(PageEnum.BASE_LOGIN);
     }
+  },
+  storage: {
+    local: ['token']
   }
 });

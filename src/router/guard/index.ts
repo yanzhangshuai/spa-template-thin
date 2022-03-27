@@ -1,10 +1,6 @@
-import { Router } from 'vue-router';
-import { createAuthGuard } from './auth';
+import type { Router } from 'vue-router';
 import { createHttpGuard } from './http';
-import { createPermissionGuard } from './permission';
 
 export function setupRouterGuard(router: Router): void {
-  createAuthGuard(router);
-  createPermissionGuard(router);
   createHttpGuard(router);
 }
