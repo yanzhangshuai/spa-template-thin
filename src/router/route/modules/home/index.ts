@@ -1,13 +1,11 @@
-import type { RouteRecordRaw } from 'vue-router';
+import { defineRoute } from '../../type';
 import { HomeRouteName } from './const';
 
-const router: RouteRecordRaw = {
+export default defineRoute({
   path: '/home',
   name: HomeRouteName.DEFAULT_ROUTER,
   component: () => import('@/page/home/index.vue'),
   meta: {
     auth: true
   }
-};
-
-export default router;
+});

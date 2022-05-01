@@ -1,14 +1,25 @@
 import { flatten } from 'ramda';
 import type { RouteRecordRaw } from 'vue-router';
 import { HomeRouteName } from './modules/home/const';
+import { defineRoute } from './type';
 import { isArray } from '@/util/is';
 import { moduleFilter } from '@/util/helper';
+
+const route = defineRoute([
+  ...findModuleRoutes(),
+  {
+    path: '/',
+    redirect: HomeRouteName.DEFAULT_ROUTER
+  }
+]);
+
+export default route;
 
 /**
  * 遍历moduleRoutes
  * @returns
  */
-const findModuleRoutes = (): Array<RouteRecordRaw> => {
+function findModuleRoutes(): Array<RouteRecordRaw> {
   const modules = moduleFilter<Array<RouteRecordRaw> | RouteRecordRaw>(import.meta.globEager('./modules/*/index.ts'));
 
   return flatten(
@@ -17,16 +28,4 @@ const findModuleRoutes = (): Array<RouteRecordRaw> => {
       return isArray(module) ? module : [module];
     })
   );
-};
-
-const moduleRoutes = findModuleRoutes();
-
-const routes: Array<RouteRecordRaw> = [
-  ...moduleRoutes,
-  {
-    path: '/',
-    redirect: HomeRouteName.DEFAULT_ROUTER
-  }
-];
-
-export default routes;
+}

@@ -1,6 +1,7 @@
 import WindiCSS from 'vite-plugin-windicss';
-import type { PluginFn } from '../../../build/type/vite';
+import { definePlugin } from '../../../build/type/vite';
 
-export const cssPlugin: PluginFn = () => {
+export default definePlugin(() => {
   return WindiCSS();
-};
+});
+
