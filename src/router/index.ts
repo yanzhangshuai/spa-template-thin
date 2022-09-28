@@ -1,6 +1,7 @@
 import type { App, Plugin } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
+
 import routes from './route';
 import { setupRouterGuard } from './guard';
 

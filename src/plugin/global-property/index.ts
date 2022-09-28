@@ -1,4 +1,5 @@
 import type { App } from 'vue';
+
 import config from '@/config';
 import { dateFormat } from '@/util/date';
 

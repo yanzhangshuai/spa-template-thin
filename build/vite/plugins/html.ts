@@ -1,6 +1,8 @@
-import type { Plugin } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
+
 import { definePlugin } from '../../../build/type/vite';
+
+import type { Plugin } from 'vite';
 
 export default definePlugin((mode) => {
   return (createHtmlPlugin({

@@ -1,5 +1,7 @@
-import { h } from 'vue';
+import { createVNode } from 'vue';
+
 import { mount } from '@vue/test-utils';
+
 import ConfigProviderComponent from '@/component/modules/config-provider';
 
 describe('config-provider', () => {
@@ -11,9 +13,9 @@ describe('config-provider', () => {
     const text = 'default slot';
     const wrapper = mount(ConfigProviderComponent, {
       slots: {
-        default: () => h('h1', text)
+        default: () => createVNode('h1', { class: 'slot' }, text)
       }
     });
-    expect(wrapper.find('.config-provider').find('h1').text()).toEqual(text);
+    expect(wrapper.find('.slot').text()).toEqual(text);
   });
 });

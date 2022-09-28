@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
-import type { UserConfig } from 'vitest/config';
+
 import { root } from '../build/util/path';
 import viteConfig from '../build/vite.config';
+
+import type { UserConfig } from 'vitest/config';
 
 export default defineConfig(async (env) => {
   // function
@@ -19,12 +21,13 @@ export default defineConfig(async (env) => {
       globals: true,
       environment: 'jsdom',
       transformMode: {
-        web: [/\.[jt]sx$/]
+        web: [/\.([jt]sx?|json|vue)$/]
       },
       dir: 'test/modules',
       include: ['**/*.{test,spec}.ts'],
       coverage: {
         reporter: ['html'],
+        all: true,
         reportsDirectory: 'report/test'
       }
     }
@@ -32,3 +35,4 @@ export default defineConfig(async (env) => {
 
   return userConfig;
 });
+

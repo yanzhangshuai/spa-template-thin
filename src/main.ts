@@ -1,12 +1,15 @@
-import 'windi.css';
 import { createApp } from 'vue';
-import Service from './service';
+
 import Store from '@/store';
 import Plugin from '@/plugin';
-import Component from '@/component';
-import Directive from '@/directive';
 import Router from '@/router';
 import App from '@/page/app.vue';
+import Component from '@/component';
+import Directive from '@/directive';
+
+import Service from './service';
+
+import 'windi.css';
 import '@/asset/style/index.less';
 
 const app = createApp(App);

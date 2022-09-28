@@ -1,14 +1,18 @@
 import { resolve } from 'path';
-import type { ConfigEnv } from 'vite';
+
 import { defineConfig, loadEnv } from 'vite';
+
 import { version } from '../package.json';
-import type { Mode } from './type/vite';
+
 import { wrapperEnv } from './util/env';
 import { configPath, root } from './util/path';
-import { alias } from './vite/alias';
-import { createProxy } from './vite/proxy';
-import { createVitePlugins } from './vite/plugin';
 import { assetFileNames, chunkFileNames, entryFileNames, manualChunks } from './vite/output';
+import { createVitePlugins } from './vite/plugin';
+import { createProxy } from './vite/proxy';
+import { tsconfigAlias } from './vite/tsconfig.alias';
+
+import type { Mode } from './type/vite';
+import type { ConfigEnv } from 'vite';
 
 export default defineConfig((conf: ConfigEnv) => {
   const mode = conf.mode as Mode;
@@ -66,7 +70,7 @@ export default defineConfig((conf: ConfigEnv) => {
           drop_console: viteEnv.VITE_BUILD_DROP_CONSOLE
         }
       },
-      brotliSize: false,
+      reportCompressedSize: false,
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         plugins: [],
@@ -90,7 +94,7 @@ export default defineConfig((conf: ConfigEnv) => {
     },
 
     resolve: {
-      alias: alias(),
+      alias: tsconfigAlias(),
       mainFields: ['index', 'module', 'jsnext'],
       extensions: ['.ts', '.tsx', '.json', '.jsx', '.mjs', '.js']
     }

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useTitle } from '@/hook/web/title';
+import { usePageTitle } from '@/hook/web/title';
 import { useUserStore } from '@/store/modules/user';
 
-useTitle();
+usePageTitle();
 const userStore = useUserStore();
 
 userStore.getUserInfo().then((res) => {
@@ -11,7 +11,7 @@ userStore.getUserInfo().then((res) => {
 </script>
 
 <template>
-  <config-provider>
+  <m-config-provider>
     <router-view />
-  </config-provider>
+  </m-config-provider>
 </template>

@@ -1,7 +1,3 @@
-export function awaitWrapper<T = unknown, E = unknown>(promise: Promise<T>): Promise<Array<T | E>> {
-  return promise.then((data: T) => [null, data]).catch((err: E) => [err, null]);
-}
-
 /**
  * modules 过滤
  * @param modules
@@ -9,10 +5,7 @@ export function awaitWrapper<T = unknown, E = unknown>(promise: Promise<T>): Pro
  * @param de 是否只需要默认导出
  * @returns 模块  key:文件名称, value:default:模块 或当前文件所有模块列表
  */
-export function moduleFilter<T>(
-  modules: Record<string, Record<string, T>>,
-  filter = /^\.\/.*$/, de = true
-): Record<string, T | Record<string, T>> {
+export function moduleFilter<T>(modules: Record<string, Record<string, T>>, filter = /^\.\/.*$/, de = true): Record<string, T | Record<string, T>> {
   return Object.keys(modules)
     .filter((filename) => {
       return (

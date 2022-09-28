@@ -1,4 +1,5 @@
 import compress from 'vite-plugin-compression';
+
 import { definePlugin } from '../../../build/type/vite';
 
 export default definePlugin((mode, env) => {

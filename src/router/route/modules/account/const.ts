@@ -2,10 +2,10 @@ export const AccountRouteName = {
   /**
    * 默认路由
    */
-  DEFAULT_ROUTER: 'account',
+  DEFAULT: 'account',
 
   /**
    * 登录页
    */
-  LOGIN_ROUTER: 'account-login'
+  LOGIN: 'account-login'
 };

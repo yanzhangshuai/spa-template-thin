@@ -1,6 +1,7 @@
 import type { App, Plugin } from 'vue';
-import { debounce } from 'ts-debounce';
+
 import { createPinia } from 'pinia';
+import { debounce } from 'ts-debounce';
 import { PiniaStorage } from '@mwjz/pinia-storage';
 import { PiniaDebounce } from '@pinia/plugin-debounce';
 

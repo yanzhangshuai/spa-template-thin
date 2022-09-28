@@ -1,7 +1,10 @@
 import type { Plugin } from 'vue';
+
 import { createAsker } from '@mwjz/asker';
-import { setupInterceptor } from './interceptor/index';
+
 import config from '@/config/index';
+
+import { setupInterceptor } from './interceptor/index';
 
 const HttpPlugin: Plugin = {
   install() {

@@ -1,4 +1,5 @@
 import visualizer from 'rollup-plugin-visualizer';
+
 import { definePlugin } from '../../../build/type/vite';
 
 export default definePlugin((_mode, env) => {
@@ -11,5 +12,5 @@ export default definePlugin((_mode, env) => {
     brotliSize: true,
     template: 'treemap', // "sunburst" | "treemap" | "network",
     filename: './report/libs/index.html'
-  });
+  }) as unknown as Plugin;
 });
