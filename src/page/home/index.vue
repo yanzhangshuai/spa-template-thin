@@ -2,6 +2,6 @@
 
 <template>
   <h1 class="text-2xl text-primary">This is home</h1>
-  <m-http-demo />
+  <http-demo />
   <router-view />
 </template>

@@ -4,6 +4,7 @@
 	"repository": "https://github.com/yanzhangshuai/spa-template-thin.git",
 	"author": "yanzhangshuai<yanzhangshuai@126.com>",
 	"license": "MIT",
+	"web-types": "./src/component/web-types.json",
 	"scripts": {
 		"vue-tsc": "     vue-tsc --noEmit --skipLibCheck",
 		"vite-build": "  vite build --config ./build/vite.config.ts",
