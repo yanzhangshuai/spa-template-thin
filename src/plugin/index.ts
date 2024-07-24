@@ -1,17 +1,14 @@
-import type { App, Plugin } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import type { Plugin } from 'vue'
 
-import { setupGlobalProperty } from './global-property';
+import { defineX } from '@/util/module'
 
-const _Plugin: Plugin = {
+import GlobalProperty from './global-property'
 
-  install(app: App) {
-    injectPlugin(app);
-  }
-};
-
-export default _Plugin;
-
-function injectPlugin(app: App<Element>) {
-  setupGlobalProperty(app);
-}
-
+export default defineX<Plugin>({
+  install(app) {
+    app
+      .use(VueQueryPlugin)
+      .use(GlobalProperty)
+  },
+})

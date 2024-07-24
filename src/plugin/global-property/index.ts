@@ -1,39 +1,40 @@
-import type { App } from 'vue';
+import type { Plugin } from 'vue'
 
-import config from '@/config';
-import { dateFormat } from '@/util/date';
+import { dateFormat } from '@/util/date'
+import { defineX } from '@/util/module'
 
-let globalProps: GlobalProps;
+let globalProps: DeepReadonly<AppProps>
 
-export function setupGlobalProperty(app: App<Element>): App<Element> {
-  globalProps = {
-    DEV: import.meta.env.DEV,
-    dateFormat
-  };
-
-  Object.defineProperty(app.config.globalProperties, '$window', {
-    enumerable: false,
-    get() {
-      return window;
+export default defineX<Plugin>({
+  install(app) {
+    globalProps = {
+      DEV: import.meta.env.DEV,
+      dateFormat,
     }
-  });
 
-  Object.defineProperty(app.config.globalProperties, '$globalProps', {
-    enumerable: false,
-    get() {
-      return globalProps;
-    }
-  });
+    Object.defineProperty(app.config.globalProperties, '$win', {
+      enumerable: false,
+      get() {
+        return window
+      },
+    })
 
-  Object.defineProperty(app.config.globalProperties, '$config', {
-    enumerable: false,
-    get() {
-      return config;
-    }
-  });
-  return app;
-}
+    Object.defineProperty(app.config.globalProperties, '$app', {
+      enumerable: false,
+      get() {
+        return globalProps
+      },
+    })
 
-export function useGlobalProps(): DeepReadonly<GlobalProps> {
-  return globalProps;
+    // Object.defineProperty(app.config.globalProperties, '$conf', {
+  //   enumerable: false,
+  //   get() {
+  //     return config;
+  //   }
+  // });
+  },
+})
+
+export function useGlobalProps() {
+  return globalProps
 }
