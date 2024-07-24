@@ -8,5 +8,9 @@ coverage
 yarn-error.log
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
 report
 .history
+components.d.ts
+vite.config.ts.timestamp-*.mjs
+typed-router.d.ts

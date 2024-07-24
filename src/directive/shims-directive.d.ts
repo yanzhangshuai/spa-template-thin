@@ -3,4 +3,4 @@ declare module 'vue' {
     name?: string
   }
 }
-export { };
+export { }

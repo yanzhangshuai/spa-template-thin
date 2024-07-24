@@ -1,5 +1,7 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router'
 
-export function defineRoute(route: RouteRecordRaw | Array<RouteRecordRaw>) {
-  return route;
+export type Route = RouteRecordRaw | Array<RouteRecordRaw>
+
+export function defineRoute(route: Route) {
+  return route
 }

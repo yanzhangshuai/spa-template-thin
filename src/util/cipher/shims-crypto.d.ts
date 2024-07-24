@@ -1,6 +1,6 @@
 declare module 'crypto-js' {
-  export type WordArray = CryptoJS.lib.WordArray;
-  export type CipherParams = CryptoJS.lib.CipherParams;
+  export type WordArray = CryptoJS.lib.WordArray
+  export type CipherParams = CryptoJS.lib.CipherParams
 
   export interface Format {
     /**
@@ -14,7 +14,7 @@ declare module 'crypto-js' {
      *
      *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
      */
-    stringify(cipherParams: CipherParams): string
+    stringify: (cipherParams: CipherParams) => string
 
     /**
      * Converts an OpenSSL-compatible string to a cipher params object.
@@ -27,15 +27,15 @@ declare module 'crypto-js' {
      *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
      * @param str
      */
-    parse(str: string): CipherParams
+    parse: (str: string) => CipherParams
   }
 
   export interface CipherOption {
     /**
      * The IV to use for this operation.
      */
-    iv?: WordArray | undefined
-    format?: Format | undefined
+    iv?          : WordArray | undefined
+    format?      : Format | undefined
     [key: string]: unknown
   }
 }

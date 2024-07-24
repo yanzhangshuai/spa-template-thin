@@ -1,21 +1,11 @@
-import { unref } from 'vue';
-import type { Router } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { unref } from 'vue'
+import type { Router } from 'vue-router'
+import { useRouter } from 'vue-router'
 
-export function useReload(router?: Router): PromiseFn<never, boolean> {
-  let _router: Router;
-  !router && (_router = useRouter());
-
-  const { push, currentRoute } = router || _router;
-  const { query, params } = currentRoute.value;
-
+export function useReload(router: Router = useRouter()): PromiseFn<never, boolean> {
   return (): Promise<boolean> => {
     return new Promise((resolve) => {
-      push({
-        path: unref(currentRoute).fullPath,
-        query,
-        params
-      }).then(() => resolve(true));
-    });
-  };
+      router.replace(unref(router.currentRoute)).then(() => resolve(true))
+    })
+  }
 }

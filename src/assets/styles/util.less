@@ -1,0 +1,29 @@
+.customScrollbar(@width:6px,@color:#aaa) {
+  &::-webkit-scrollbar {
+      width: @width;
+      height: 6px;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+      background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+      border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      background: @color;
+      max-height: 150px;
+      max-width: 150px;
+      border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical:hover {
+      background-color: #999;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal:hover {
+      background-color: #999;
+  }
+}

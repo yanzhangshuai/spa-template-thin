@@ -1,11 +1,11 @@
-declare type GlobalProps = Readonly<{
+declare type AppProps = Readonly<{
   /**
-  * 开发环境
-  */
+   * 开发环境
+   */
   readonly DEV?: boolean
 
   /**
-  * 日期格式化
-  */
+   * 日期格式化
+   */
   readonly dateFormat: (date: number | Date, template?: string) => string
-}>;
+}>
