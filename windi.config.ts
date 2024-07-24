@@ -21,7 +21,7 @@ export default defineConfig({
         '-1': '-1'
       },
       colors: {
-        ...themes.default
+        ...themes.index
       },
       screens: {
         'sm': '576px',
