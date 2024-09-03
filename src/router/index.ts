@@ -1,37 +1,41 @@
-import type { App, Plugin } from 'vue';
-import type { RouteRecordRaw } from 'vue-router';
-import { createRouter, createWebHistory } from 'vue-router';
+import type { App, Plugin } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
-import routes from './route';
-import { setupRouterGuard } from './guard';
+import { defineX } from '@/util/module'
 
-const RouterPlugin: Plugin = {
+import { setupRouterGuard } from './guard'
+import routes from './route'
 
-  install(app: App, readyCallBack: (app: App) => void) {
-    const router = create();
+export default defineX<Plugin>({
+  install(app, readyCallBack: (app: App) => void) {
+    const router = setup()
 
     if (!router)
-      return;
+      return
 
-    app.use(router);
+    app.use(router)
 
-    router && router.isReady()
+    router.isReady()
       .then(() => readyCallBack(app))
-      .catch(err => (app.config.errorHandler || console.error)(err, null, null));
-  }
-};
+      .catch((err) => {
+        if (!app.config.errorHandler) {
+          console.error(err)
+        }
+      })
+  },
+})
 
-export default RouterPlugin;
+function setup() {
+  console.log('routes', routes)
 
-function create() {
-  const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: routes as Array<RouteRecordRaw>,
-    strict: false,
-    scrollBehavior: () => ({ left: 0, top: 0 })
-  });
+  const r = createRouter({
+    history       : createWebHistory(),
+    routes,
+    strict        : false,
+    scrollBehavior: () => ({ left: 0, top: 0 }),
+  })
 
-  setupRouterGuard(router);
+  setupRouterGuard(r)
 
-  return router;
+  return r
 }

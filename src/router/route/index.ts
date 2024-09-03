@@ -1,30 +1,32 @@
-import type { RouteRecordRaw } from 'vue-router';
+import { flatten, isArray } from 'lodash'
+import type { RouteRecordRaw } from 'vue-router'
+import { routes as vRoutes } from 'vue-router/auto-routes'
 
-import { flatten } from 'ramda';
-import { isArray } from '@mwjz/utils';
+import { defineX, moduleFilter } from '@/util/module'
 
-import { ErrorRouteName } from '@/router/route/modules/error/const';
-import { moduleFilter } from '@/util/helper';
+import type { Route } from './type'
 
-import { HomeRouteName } from './modules/home/const';
-import { defineRoute } from './type';
-
-export default defineRoute([
+export default defineX<RouteRecordRaw[]>([
+  ...vRoutes,
   ...findModuleRoutes(),
-  { path: '/', redirect: HomeRouteName.DEFAULT },
-  { path: '/:catchAll(.*)', redirect: { name: ErrorRouteName.NOT_FOUND } }
-]);
+  { path: '/', redirect: '/home' },
+  { path: '/:catchAll(.*)', redirect: '/error/404' },
+])
 
 /**
  * 遍历moduleRoutes
- * @returns
+ * @returns routes
  */
 function findModuleRoutes(): Array<RouteRecordRaw> {
-  const modules = moduleFilter<Array<RouteRecordRaw> | RouteRecordRaw>(import.meta.globEager('./modules/*/index.ts'));
+  const modules = moduleFilter<Route>(import.meta.glob('./**/index.ts', { eager: true }), { de: false })
 
-  const routes = Object.keys(modules).map((key) => {
-    const module = modules[key] as Array<RouteRecordRaw> | RouteRecordRaw;
-    return isArray(module) ? module : [module];
-  });
-  return flatten(routes);
+  const routes = Object
+    .keys(modules)
+    .map((name) => {
+      const route = modules[name].default
+
+      return isArray(route) ? route : [route]
+    })
+
+  return flatten(routes)
 }

@@ -1,6 +1,8 @@
-const plugins = { autoprefixer: {} };
+// import process from 'node:process'
 
-if (process.env.NODE_ENV === 'production')
-  plugins.cssnano = {};
+// const plugins = { autoprefixer: {} }
 
-module.exports = { plugins };
+// if (process.env.VITE_ENV === 'production')
+//   plugins.cssnano = {}
+
+// export default { plugins }

@@ -1,28 +1,31 @@
-import { createApp } from 'vue';
+import 'virtual:uno.css'
+import '@/assets/styles/app.less'
 
-import { preloadConfig } from '@/preload';
-import Store from '@/store';
-import Plugin from '@/plugin';
-import Router from '@/router';
-import App from '@/page/app.vue';
-import Component from '@/component';
-import Directive from '@/directive';
+import { createApp } from 'vue'
 
-import Service from './service';
-
-import 'windi.css';
-import '@/asset/style/index.less';
+import Directive from '@/directive'
+import App from '@/page/app.vue'
+import Plugin from '@/plugin'
+import Router from '@/router'
+import Service from '@/service'
+import Store from '@/store'
 
 preloadConfig().then((config) => {
-  console.log('----,config', config);
-
-  const app = createApp(App);
+  const app = createApp(App)
 
   app.use(Plugin)
-    .use(Component)
     .use(Directive)
-    .use(Router, () => app.mount('#app'))
     .use(Service)
-    .use(Store);
-});
+    .use(Store)
+    .use(Router, () => app.mount('#app'))
+})
 
+// fetch 获取json
+function preloadConfig(path = '/config.json'): Promise<unknown> {
+  return fetch(path, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } })
+    .then((response) => {
+      return response.json()
+    }).catch((error) => {
+      console.error('error', error)
+    })
+}

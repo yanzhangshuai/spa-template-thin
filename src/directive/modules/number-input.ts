@@ -1,16 +1,13 @@
-import type { Directive } from 'vue';
+import { defineDirective } from '../type'
 
-const numberInputDirective: Directive = {
+export default defineDirective({
   name: 'number',
   mounted(el: HTMLInputElement): void {
-    // TODO: 1.未处理中文
     el.addEventListener('keydown', (options) => {
-      if (/^[a-z,A-Z]$/.test(options.key)) {
-        el.value = el.value.replace(/D/g, '');
-        options.preventDefault();
+      if (/^[a-z,]$/i.test(options.key)) {
+        el.value = el.value.replace(/D/g, '')
+        options.preventDefault()
       }
-    });
-  }
-};
-
-export default numberInputDirective;
+    })
+  },
+})
