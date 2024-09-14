@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-
 import { globbySync } from 'globby'
 
 type ThemeColor = Recordable<Recordable<string>>

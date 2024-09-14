@@ -4,7 +4,8 @@ import { usePageTitle } from '@/hook/web/title'
 usePageTitle()
 </script>
 
-<template lang="pug">
-config-provider
-  router-view
+<template>
+  <ConfigProvider>
+    <RouterView />
+  </ConfigProvider>
 </template>

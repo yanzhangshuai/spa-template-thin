@@ -1,8 +1,8 @@
-import { flatten, isArray } from 'lodash'
 import type { RouteRecordRaw } from 'vue-router'
-import { routes as vRoutes } from 'vue-router/auto-routes'
 
+import { flatten, isArray } from 'lodash'
 import { defineX, moduleFilter } from '@/util/module'
+import { routes as vRoutes } from 'vue-router/auto-routes'
 
 import type { Route } from './type'
 

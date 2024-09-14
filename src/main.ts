@@ -1,16 +1,14 @@
 import 'virtual:uno.css'
-import '@/assets/styles/app.less'
-
-import { createApp } from 'vue'
-
-import Directive from '@/directive'
-import App from '@/page/app.vue'
+import Store from '@/store'
 import Plugin from '@/plugin'
 import Router from '@/router'
+import { createApp } from 'vue'
 import Service from '@/service'
-import Store from '@/store'
+import App from '@/page/app.vue'
+import '@/assets/styles/app.less'
+import Directive from '@/directive'
 
-preloadConfig().then((config) => {
+preloadConfig().then((_) => {
   const app = createApp(App)
 
   app.use(Plugin)
@@ -25,7 +23,8 @@ function preloadConfig(path = '/config.json'): Promise<unknown> {
   return fetch(path, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } })
     .then((response) => {
       return response.json()
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.error('error', error)
     })
 }

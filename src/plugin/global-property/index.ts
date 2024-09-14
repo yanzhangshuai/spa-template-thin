@@ -1,7 +1,7 @@
 import type { Plugin } from 'vue'
 
-import { dateFormat } from '@/util/date'
 import { defineX } from '@/util/module'
+import { dateFormat } from '@/util/date'
 
 let globalProps: DeepReadonly<AppProps>
 

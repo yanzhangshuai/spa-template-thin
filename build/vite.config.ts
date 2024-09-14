@@ -1,5 +1,4 @@
 import process from 'node:process'
-
 import { defineConfig } from 'vite'
 
 import pluginFn from './config/plugin'
@@ -24,13 +23,25 @@ export default defineConfig((config) => {
     plugins: pluginFn(),
     build  : {
       chunkSizeWarningLimit: 500,
-      rollupOptions        : {
-        output: {
+    },
+    server       : serverOptions,
+    preview      : serverOptions,
+    rollupOptions: {
+      cache : true,
+      output: {
+        manualChunks: (id: string) => {
+          if (id.includes('node_modules')) {
+            // 使用正则获取包
+            const regex = /node_modules\/(.+?)\//
+            const match = id.match(regex)
+            if (match) {
+              const name = match[1]
+              return name.replace('@', '')
+            }
+          }
         },
       },
     },
-    server : serverOptions,
-    preview: serverOptions,
 
     resolve: {
       alias: tsconfigAlias('tsconfig.app.json'),

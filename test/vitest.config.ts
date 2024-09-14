@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
 import type { UserConfig } from 'vitest/config'
+
+import { defineConfig } from 'vite'
 
 import viteConfig from '../build/vite.config'
 
 export default defineConfig(async (env) => {
-  // function
   let config = typeof viteConfig === 'function' ? viteConfig(env) : viteConfig
 
   if (typeof config === 'object' && typeof (config as Promise<UserConfig>).then === 'function') {

@@ -1,7 +1,7 @@
-import { VueQueryPlugin } from '@tanstack/vue-query'
 import type { Plugin } from 'vue'
 
 import { defineX } from '@/util/module'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 
 import GlobalProperty from './global-property'
 

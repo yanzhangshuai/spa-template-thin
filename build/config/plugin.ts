@@ -1,34 +1,35 @@
-import process from 'node:process'
+import type { PluginOption } from 'vite'
 
-import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import UnoCSS from 'unocss/vite'
+import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { visualizer } from 'rollup-plugin-visualizer'
-import UnoCSS from 'unocss/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
-import VueRouter from 'unplugin-vue-router/vite'
-import type { Plugin } from 'vite'
 import { imagetools } from 'vite-imagetools'
-import { compression } from 'vite-plugin-compression2'
 import ViteRestart from 'vite-plugin-restart'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import basicSsl from '@vitejs/plugin-basic-ssl'
+import VueRouter from 'unplugin-vue-router/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { visualizer } from 'rollup-plugin-visualizer'
+import Components from 'unplugin-vue-components/vite'
+import { compression } from 'vite-plugin-compression2'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 import { defineX, devConf } from '../config'
 
-export default defineX<Fn<Array<Plugin | Plugin[]>>>(() => {
-  const plugins: Array<Plugin | Plugin[]> = [
+export default defineX<Fn<Array<PluginOption | PluginOption[]>>>(() => {
+  const plugins: Array<PluginOption | PluginOption[]> = [
     ViteRestart({ restart: ['src/assets/styles/theme/*.less'] }),
 
     UnoCSS(),
 
     Components({
-      dirs     : ['src/component'],
-      dts      : './src/component/components.d.ts',
-      resolvers: [
+      dirs                : ['src/component'],
+      dts                 : './src/component/components.d.ts',
+      directoryAsNamespace: true,
+      globalNamespaces     : ['global'],
+      resolvers           : [
         AntDesignVueResolver({ importStyle: 'less' }),
       ],
     }),
@@ -55,7 +56,7 @@ export default defineX<Fn<Array<Plugin | Plugin[]>>>(() => {
       componentInspector: true,
       launchEditor      : 'code',
 
-    }) as Plugin,
+    }),
   ]
 
   if (devConf.https) {

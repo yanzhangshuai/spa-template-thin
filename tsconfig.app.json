@@ -47,10 +47,5 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "exclude": ["node_modules"],
-
-  "vueCompilerOptions": {
-    "plugins": ["@vue/language-plugin-pug"]
-  }
-
+  "exclude": ["node_modules"]
 }

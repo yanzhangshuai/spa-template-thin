@@ -7,7 +7,8 @@ defineExpose({
 })
 </script>
 
-<template lang="pug">
+<template>
+  <div>item component</div>
 </template>
 
 <style scoped lang="less">

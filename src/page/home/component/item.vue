@@ -4,8 +4,8 @@ const props = defineProps<{
 }>()
 </script>
 
-<template lang="pug">
-h1 {{ props.name }}
+<template>
+  <h1>{{ props.name }}</h1>
 </template>
 
 <style lang="less"></style>

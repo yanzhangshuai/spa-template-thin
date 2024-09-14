@@ -7,6 +7,6 @@ definePage({
 })
 </script>
 
-<template lang="pug">
-h1 This is Reg
+<template>
+  <h1>is This Reg</h1>
 </template>

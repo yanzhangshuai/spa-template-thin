@@ -10,8 +10,11 @@ export function authGuard(router: Router): void {
       return next()
     }
 
-    useAccountStore().getUserInfo()
+    useAccountStore()
+      .getUserInfo()
       .then(() => next())
-      .catch(() => { next('/account/login') })
+      .catch(() => {
+        next('/account/login')
+      })
   })
 }

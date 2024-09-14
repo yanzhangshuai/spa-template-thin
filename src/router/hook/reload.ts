@@ -1,5 +1,6 @@
-import { unref } from 'vue'
 import type { Router } from 'vue-router'
+
+import { unref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export function useReload(router: Router = useRouter()): PromiseFn<never, boolean> {

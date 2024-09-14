@@ -1,6 +1,6 @@
-import Base64 from 'crypto-js/enc-base64'
-import UTF8 from 'crypto-js/enc-utf8'
 import md5 from 'crypto-js/md5'
+import UTF8 from 'crypto-js/enc-utf8'
+import Base64 from 'crypto-js/enc-base64'
 
 export function encryptByBase64(cipherText: string): string {
   return UTF8.parse(cipherText).toString(Base64)

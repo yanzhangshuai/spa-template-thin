@@ -2,9 +2,13 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "baseUrl": "./build",
+    "baseUrl": "./",
     "module": "ESNext",
     "moduleResolution": "bundler",
+
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "strict": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
@@ -14,6 +18,10 @@
     "build/**/*.ts",
     "build/**/*.d.ts",
     "test/**/*.ts",
-    "test/**/*.d.ts"
+    "test/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue"
+
   ]
 }

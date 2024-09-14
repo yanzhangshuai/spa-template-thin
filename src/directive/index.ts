@@ -1,6 +1,6 @@
-import { isNil } from 'lodash'
 import type { App, Directive, Plugin } from 'vue'
 
+import { isNil } from 'lodash'
 import { defineX, moduleFilter } from '@/util/module'
 
 export default defineX<Plugin>({

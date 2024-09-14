@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, unref } from 'vue'
 
-import Item from './item.vue'
+import Item from './component/d1/item.vue'
 
 const itemRef = ref<InstanceType<typeof Item>>()
 

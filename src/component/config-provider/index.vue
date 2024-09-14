@@ -1,10 +1,9 @@
 <script lang="ts" setup>
+import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
-
+import { ref, watch } from 'vue'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import dayjs from 'dayjs'
-import { ref, watch } from 'vue'
 
 dayjs.locale('en')
 
@@ -15,10 +14,12 @@ watch(locale, (val) => {
 })
 </script>
 
-<template lang="pug">
-.config-provider
-  a-config-provider(:locale="locale === 'en' ? enUS : zhCN")
-    slot
+<template>
+  <div class="config-provider">
+    <AConfigProvider :locale="locale === 'en' ? enUS : zhCN">
+      <slot />
+    </AConfigProvider>
+  </div>
 </template>
 
 <style lang="less"></style>
