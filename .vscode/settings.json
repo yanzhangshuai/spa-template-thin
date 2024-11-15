@@ -92,5 +92,9 @@
     "pcss",
     "postcss"
   ],
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "cSpell.words": [
+    "antdv",
+    "vnode"
+  ]
 }

@@ -1,126 +1,134 @@
+import { isArray, isMap, isObject, isSet, isString } from 'lodash-es'
+
 const toString = Object.prototype.toString
 
-/**
- *  check value type
- */
+// /**
+//  *  check value type
+//  */
 export const is = (val: unknown, type: string): boolean => toString.call(val) === `[object ${type}]`
 
 /**
- *  check value is defined
+ *  判断除去0以外的假值
+ * @param val
  */
-export const isDef = <T = any>(val?: T): val is T => val !== undefined
+export const isFalsyExceptZero = (val: unknown): boolean => val !== 0 && !val
 
-/**
- *  check value is undefined
- *
- */
-export const isUnDef = <T = any>(val?: T): val is undefined => !isDef(val)
+// /**
+//  *  check value is defined
+//  */
+// export const isDef = <T = any>(val?: T): val is T => val !== undefined
 
-/**
- * check value is null
- *
- */
-export const isNull = (val: any): val is null => val === null
+// /**
+//  *  check value is undefined
+//  *
+//  */
+// export const isUnDef = <T = any>(val?: T): val is undefined => !isDef(val)
 
-/**
- * check value is undefined or null
- */
-export const isNil = (val: any): val is null | undefined => isUnDef(val) || isNull(val)
+// /**
+//  * check value is null
+//  *
+//  */
+// export const isNull = (val: any): val is null => val === null
 
-/**
- * check value is number
- */
-export const isNumber = (val: any): val is number => is(val, 'Number')
+// /**
+//  * check value is undefined or null
+//  */
+// export const isNil = (val: any): val is null | undefined => isUnDef(val) || isNull(val)
 
-/**
- * check value is function
- */
-export const isFunc = (val: any): val is Fn => typeof val === 'function'
+// /**
+//  * check value is number
+//  */
+// export const isNumber = (val: any): val is number => is(val, 'Number')
 
-/**
- * check value is string
- */
-export const isString = (val: any): val is string => is(val, 'String')
+// /**
+//  * check value is function
+//  */
+// export const isFunc = (val: any): val is Fn => typeof val === 'function'
 
-/**
- *  check value is object
- */
-export const isObject = (val: any): val is Record<string | number | symbol, any> => val !== null && is(val, 'Object')
+// /**
+//  * check value is string
+//  */
+// export const isString = (val: any): val is string => is(val, 'String')
 
-/**
- *  check value is array
- */
-export const isArray = <T = any>(val: any): val is Array<T> => is(val, 'Array')
+// /**
+//  *  check value is object
+//  */
+// export const isObject = (val: any): val is Record<string | number | symbol, any> => val !== null && is(val, 'Object')
 
-/**
- * check value is ArrayLink
- */
-export const isArrayLike = <T = any>(val: any): val is ArrayLike<T> => isDef(val) && isNumber(val.length) && !isFunc(val)
+// /**
+//  *  check value is array
+//  */
+// export const isArray = <T = any>(val: any): val is Array<T> => is(val, 'Array')
 
-/**
- * check value is number or check value is number string
- */
-export const isNumeric = (val: any): val is number | string => !isArray(val) && !isObject(val) && val - Number.parseFloat(val) + 1 >= 0
+// /**
+//  * check value is ArrayLink
+//  */
+// export const isArrayLike = <T = any>(val: any): val is ArrayLike<T> => isDef(val) && isNumber(val.length) && !isFunc(val)
 
-/**
- * check value is boolean
- */
-export const isBoolean = (val: any): val is boolean => is(val, 'Boolean')
+// /**
+//  * check value is number or check value is number string
+//  */
+// export const isNumeric = (val: any): val is number | string => !isArray(val) && !isObject(val) && val - Number.parseFloat(val) + 1 >= 0
 
-/**
- * check value is symbol
- */
-export const isSymbol = (val: any): val is symbol => is(val, 'Symbol')
+// /**
+//  * check value is boolean
+//  */
+// export const isBoolean = (val: any): val is boolean => is(val, 'Boolean')
 
-/**
- * check value is regExp
- */
-export const isRegExp = (val: any): val is RegExp => is(val, 'RegExp')
+// /**
+//  * check value is symbol
+//  */
+// export const isSymbol = (val: any): val is symbol => is(val, 'Symbol')
 
-/**
- * check value is Data
- */
-export const isDate = (val: any): val is Date => is(val, 'Date')
+// /**
+//  * check value is regExp
+//  */
+// export const isRegExp = (val: any): val is RegExp => is(val, 'RegExp')
 
-/**
- * check value is error
- */
-export const isError = (val: any): val is Error => is(val, 'Error')
+// /**
+//  * check value is Data
+//  */
+// export const isDate = (val: any): val is Date => is(val, 'Date')
 
-/**
- * check value is Map
- */
-export const isMap = <K = any, V = any>(val: any): val is Map<K, V> => is(val, 'Map')
+// /**
+//  * check value is error
+//  */
+// export const isError = (val: any): val is Error => is(val, 'Error')
 
-/**
- * check value is WeakMap
- */
-export const isWeakMap = <K extends object = any, V = any>(val: any): val is WeakMap<K, V> => is(val, 'WeakMap')
+// /**
+//  * check value is Map
+//  */
+// export const isMap = <K = any, V = any>(val: any): val is Map<K, V> => is(val, 'Map')
 
-/**
- * check value is Set
- */
-export const isSet = <T = any>(val: any): val is Set<T> => is(val, 'Set')
+// /**
+//  * check value is WeakMap
+//  */
+// export const isWeakMap = <K extends object = any, V = any>(val: any): val is WeakMap<K, V> => is(val, 'WeakMap')
 
-/**
- * check value is WeakSet
- */
-export const isWeakSet = <T extends object = any>(val: any): val is WeakSet<T> => is(val, 'WeakSet')
+// /**
+//  * check value is Set
+//  */
+// export const isSet = <T = any>(val: any): val is Set<T> => is(val, 'Set')
 
-/**
- * check value is Promise
- */
-export const isPromise = <T = any>(val: any): val is Promise<T> => is(val, 'Promise')
+// /**
+//  * check value is WeakSet
+//  */
+// export const isWeakSet = <T extends object = any>(val: any): val is WeakSet<T> => is(val, 'WeakSet')
 
-/**
- * check value is PromiseLike
- */
-export const isPromiseLike = <T = any>(val: any): val is PromiseLike<T> => isObject(val) && isFunc(val.then)
+// /**
+//  * check value is Promise
+//  */
+// export const isPromise = <T = any>(val: any): val is Promise<T> => is(val, 'Promise')
 
-/**
- * check value is generator
- */
-export const isGenerator = <T = any>(val: any): val is Generator<T> => is(val, 'Generator')
+// /**
+//  * check value is PromiseLike
+//  */
+// export const isPromiseLike = <T = any>(val: any): val is PromiseLike<T> => isObject(val) && isFunc(val.then)
+
+// /**
+//  * check value is generator
+//  */
+// export const isGenerator = <T = any>(val: any): val is Generator<T> => is(val, 'Generator')
 
 // /**
 //  * check value is generator function

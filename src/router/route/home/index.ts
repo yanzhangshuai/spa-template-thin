@@ -1,4 +1,4 @@
-// import { defineRoute } from '../type'
+// import { defineRoute } from '@/util/define'
 
 // export default defineRoute({
 //   path     : '/home',

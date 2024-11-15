@@ -1,12 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { flatten, isArray } from 'lodash'
-import { defineX, moduleFilter } from '@/util/module'
+import { defineRoute } from '@/util/define'
+import { flatten, isArray } from 'lodash-es'
+import { moduleFilter } from '@/util/module'
 import { routes as vRoutes } from 'vue-router/auto-routes'
 
-import type { Route } from './type'
+type Route = RouteRecordRaw | RouteRecordRaw[]
 
-export default defineX<RouteRecordRaw[]>([
+export default defineRoute([
   ...vRoutes,
   ...findModuleRoutes(),
   { path: '/', redirect: '/home' },

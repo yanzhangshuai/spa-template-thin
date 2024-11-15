@@ -1,8 +1,6 @@
-import type { Plugin } from 'vue'
+import { definePlugin } from '@/util/define'
 
-import { defineX } from '@/util/module'
-
-export default defineX<Plugin>({
+export default definePlugin({
   install() {
     setup()
   },

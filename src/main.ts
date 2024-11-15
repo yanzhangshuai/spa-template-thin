@@ -1,18 +1,16 @@
-import 'virtual:uno.css'
 import Store from '@/store'
 import Plugin from '@/plugin'
 import Router from '@/router'
 import { createApp } from 'vue'
 import Service from '@/service'
 import App from '@/page/app.vue'
+import 'virtual:uno.css'
 import '@/assets/styles/app.less'
-import Directive from '@/directive'
 
 preloadConfig().then((_) => {
   const app = createApp(App)
 
   app.use(Plugin)
-    .use(Directive)
     .use(Service)
     .use(Store)
     .use(Router, () => app.mount('#app'))

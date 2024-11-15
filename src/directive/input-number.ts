@@ -1,7 +1,6 @@
-import { defineDirective } from '../type'
+import { defineDirective } from '@/util/define'
 
 export default defineDirective({
-  name: 'number',
   mounted(el: HTMLInputElement): void {
     el.addEventListener('keydown', (options) => {
       if (/^[a-z,]$/i.test(options.key)) {

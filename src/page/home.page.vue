@@ -10,9 +10,10 @@ definePage({
 </script>
 
 <template>
-  <h1 class="text-2xl text-r flex-center">h1</h1>
+  <!-- <h1 class="text-2xl text-r flex-center">h1</h1> -->
+  <input v-inputNumber>
 
-  <a-button type="primary" @click="() => $router.push('/account/login')">登录</a-button>
+  <AButton type="primary" @click="() => $router.push('/account/login')">登录</AButton>
 
   <img src="@/assets/images/logo.png?format=webp" alt="logo" class="w-20 h-20">
 
@@ -22,9 +23,9 @@ definePage({
 </template>
 
 <style lang="less" scoped>
-h1 {
-  background-image: url('@/assets/images/logo.png');
+// h1 {
+//   background-image: url('@/assets/images/logo.png');
 
-  //background: @primary;
-}
+//   //background: @primary;
+// }
 </style>

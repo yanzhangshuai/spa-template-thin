@@ -1,9 +1,9 @@
-import type { App, Plugin } from 'vue'
+import type { App } from 'vue'
 
 import { createPinia } from 'pinia'
-import { defineX } from '@/util/module'
+import { definePlugin } from '@/util/define'
 
-export default defineX<Plugin>({
+export default definePlugin({
   install(app: App) {
     const store = createPinia()
 

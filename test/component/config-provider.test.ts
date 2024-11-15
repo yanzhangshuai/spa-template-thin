@@ -2,9 +2,9 @@ import { createVNode } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import ConfigProvider from '../../src/component/config-provider/index.vue'
+import ConfigProvider from '../../src/component/s-config-provider/index.vue'
 
-describe('config-provider', () => {
+describe('s-config-provider', () => {
   it('component exist', () => {
     expect(ConfigProvider).toBeTruthy()
   })

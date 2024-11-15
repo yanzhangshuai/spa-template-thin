@@ -10,5 +10,5 @@ definePage({
 <template>
   <h1>This is Login</h1>
 
-  <a-button type="primary" @click="() => $router.push('/account/reg')">注册</a-button>
+  <AButton type="primary" @click="() => $router.push('/account/reg')">注册</AButton>
 </template>

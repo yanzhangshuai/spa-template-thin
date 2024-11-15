@@ -5,7 +5,7 @@ usePageTitle()
 </script>
 
 <template>
-  <ConfigProvider>
+  <SConfigProvider>
     <RouterView />
-  </ConfigProvider>
+  </SConfigProvider>
 </template>

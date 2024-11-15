@@ -1,4 +1,4 @@
-import { trim } from 'lodash'
+import { trim } from 'lodash-es'
 
 export interface ViewportOffsetResult {
   left             : number

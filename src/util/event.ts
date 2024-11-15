@@ -1,5 +1,6 @@
+import { isFunction, isNil, isNumber } from 'lodash-es'
+
 import { assert } from './error'
-import { isFunc, isNil, isNumber } from './is'
 
 interface EventHandlerType {
   eventId: number
@@ -20,7 +21,7 @@ export class EventEmitter {
    * @returns event id
    */
   private static add(key: string, handler: Fn, once: boolean): number {
-    assert(isFunc(handler), 'handler must be a function') //  handler must be a function
+    assert(isFunction(handler), 'handler must be a function') //  handler must be a function
 
     const eventId = this.eventId++
     // 判断 type 事件对应的队列是否存在
