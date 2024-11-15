@@ -1,7 +1,3 @@
-export function defineX<T>(v: T) {
-  return v
-}
-
 /**
  * moduleFilter 过滤
  * @param modules

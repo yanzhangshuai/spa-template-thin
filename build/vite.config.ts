@@ -1,8 +1,8 @@
 import process from 'node:process'
 import { defineConfig } from 'vite'
 
-import pluginFn from './config/plugin'
-import serverOptions from './config/server'
+import serverFn from './config/server'
+import pluginFn from './config/plugins'
 import { tsconfigAlias } from './util/tsconfig.alias'
 
 export default defineConfig((config) => {
@@ -24,8 +24,8 @@ export default defineConfig((config) => {
     build  : {
       chunkSizeWarningLimit: 500,
     },
-    server       : serverOptions,
-    preview      : serverOptions,
+    server       : serverFn(),
+    preview      : serverFn(),
     rollupOptions: {
       cache : true,
       output: {

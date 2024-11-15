@@ -1,13 +1,15 @@
 import type { PreviewOptions, ProxyOptions, ServerOptions } from 'vite'
 
-import { defineX, devConf } from '../config'
+import { devConf } from '../config'
 
-export default defineX<ServerOptions | PreviewOptions>({
-  host : true,
-  port : devConf.port,
-  https: devConf.https ? {} : undefined,
-  proxy: createProxy(devConf.proxy),
-})
+export default () => {
+  return {
+    host : true,
+    port : devConf.port,
+    https: devConf.https ? {} : undefined,
+    proxy: createProxy(devConf.proxy),
+  } as ServerOptions & PreviewOptions
+}
 
 function createProxy(proxy: Recordable<string>): Recordable<ProxyOptions> {
   const res: Recordable<ProxyOptions> = {}

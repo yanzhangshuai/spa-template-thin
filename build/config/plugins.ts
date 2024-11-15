@@ -1,8 +1,10 @@
 import type { PluginOption } from 'vite'
 
+import fs from 'node:fs'
 import UnoCSS from 'unocss/vite'
 import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
+import { kebabCase } from 'lodash-es'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { imagetools } from 'vite-imagetools'
 import ViteRestart from 'vite-plugin-restart'
@@ -13,24 +15,33 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import Components from 'unplugin-vue-components/vite'
 import { compression } from 'vite-plugin-compression2'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
-import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
-import { defineX, devConf } from '../config'
+import { devConf } from '../config'
 
-export default defineX<Fn<Array<PluginOption | PluginOption[]>>>(() => {
+export default () => {
   const plugins: Array<PluginOption | PluginOption[]> = [
     ViteRestart({ restart: ['src/assets/styles/theme/*.less'] }),
 
     UnoCSS(),
 
     Components({
-      dirs                : ['src/component'],
+      dirs                : ['src/component', 'src/directive'],
       dts                 : './src/component/components.d.ts',
       directoryAsNamespace: true,
       globalNamespaces     : ['global'],
       resolvers           : [
         AntDesignVueResolver({ importStyle: 'less' }),
+        {
+          type   : 'directive',
+          resolve:  (name) => {
+            const filename = `${kebabCase(name)}.ts`
+
+            const exist = fs.existsSync(`src/directive/${filename}`)
+
+            return exist ? `@/directive/${filename}` : null
+          },
+        },
       ],
     }),
     VueRouter({
@@ -63,11 +74,6 @@ export default defineX<Fn<Array<PluginOption | PluginOption[]>>>(() => {
     plugins.push(basicSsl({ name: 'dev', domains: ['*.com'] }))
   }
 
-  if (process.env.VITE_ENV === 'production') {
-    // 生产环境下启用 lodash 优化
-    plugins.push(optimizeLodashImports())
-  }
-
   if (process.env.VITE_GZIP === 'true') {
     plugins.push(compression())
   }
@@ -83,4 +89,4 @@ export default defineX<Fn<Array<PluginOption | PluginOption[]>>>(() => {
   }
 
   return plugins
-})
+}

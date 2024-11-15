@@ -1,13 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App } from 'vue'
 
-import { defineX } from '@/util/module'
+import { definePlugin } from '@/util/define'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import routes from './route'
 import { setupRouterGuard } from './guard'
 
-export default defineX<Plugin>({
-  install(app, readyCallBack: (app: App) => void) {
+export default definePlugin<[(app: App) => void]>({
+  install(app, readyCallBack) {
     const router = setup()
 
     if (!router)

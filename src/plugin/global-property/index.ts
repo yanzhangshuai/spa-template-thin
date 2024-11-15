@@ -1,11 +1,9 @@
-import type { Plugin } from 'vue'
-
-import { defineX } from '@/util/module'
 import { dateFormat } from '@/util/date'
+import { definePlugin } from '@/util/define'
 
 let globalProps: DeepReadonly<AppProps>
 
-export default defineX<Plugin>({
+export default definePlugin({
   install(app) {
     globalProps = {
       DEV: import.meta.env.DEV,

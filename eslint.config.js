@@ -6,7 +6,12 @@ export default antfu(
       overrides: {
         'vue/require-typed-ref'                      : 'error',
         'vue/singleline-html-element-content-newline': 'off',
-        'vue/block-lang'                             : [
+        'vue/component-definition-name-casing'       : ['error', 'PascalCase'],
+        'vue/component-name-in-template-casing'      : ['error', 'PascalCase', {
+          registeredComponentsOnly: false,
+          ignores                 : [],
+        }],
+        'vue/block-lang': [
           'error',
           {
             script: { lang: 'ts' },

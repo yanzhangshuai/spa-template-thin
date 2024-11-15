@@ -10,7 +10,3 @@ export const devConf = {
 export const buildConf = {
 
 }
-
-export function defineX<T>(val: T) {
-  return val
-}

@@ -1,5 +1,6 @@
 export {}
-declare module '@vue/runtime-core' {
+
+declare module 'vue' {
   interface ComponentCustomProperties {
     $win: Window & typeof globalThis
     $app: AppProps
