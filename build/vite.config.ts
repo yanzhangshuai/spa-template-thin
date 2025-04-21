@@ -46,7 +46,7 @@ export default defineConfig((config) => {
         },
       },
     },
-    server       : serverFn(),
+    server : serverFn(),
     preview: serverFn(),
     resolve: {
       alias: tsconfigAlias('tsconfig.app.json'),

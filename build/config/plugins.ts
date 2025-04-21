@@ -84,7 +84,7 @@ export default () => {
       gzipSize  : true,
       brotliSize: true,
       template  : 'treemap', // "sunburst" | "treemap" | "network",
-      filename  : './report/libs/index.html',
+      filename  : './report/stats.html',
     }))
   }
 
