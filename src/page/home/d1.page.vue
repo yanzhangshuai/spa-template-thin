@@ -7,7 +7,7 @@ const t1Service = useTest1Service()
 
 const tableRef = useTemplateRef('table')
 
-const columns = defineSTableColumns([
+const cols = defineSTableColumns([
   { key: ' id ',        title: '__ID__' },
   { key: 'name',        title: '姓名' },
   { key: 'age',         title: '年龄' },
@@ -31,8 +31,8 @@ onMounted(() => {
     auto
     row-key="id"
     opera-width="200"
-    :columns="columns"
-    :data-func="getData"
+    :cols="cols"
+    :get-data="getData"
   >
     <template #createdAt="{ record }">
       {{ $app.dateFormat(record.createdAt) }}

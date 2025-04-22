@@ -32,8 +32,8 @@ import { isFalsyExceptZero } from '@/util/is'
 import { computed, h, reactive, ref, unref, useSlots } from 'vue'
 
 const {
-  dataFunc,
-  columns,
+  getData,
+  cols,
   rowKey          = 'id',
   auto            = false,
   selectable      = false,
@@ -44,8 +44,8 @@ const {
   customRow,
   rowSelection,
 } = defineProps<{
-  dataFunc       : (page: PaginationReq) => Promise<PaginationRes<E> | E[]>
-  columns        : Array<STableColumn<K, T>>
+  getData        : (page: PaginationReq) => Promise<PaginationRes<E> | E[]>
+  cols           : Array<STableColumn<K, T>>
   rowKey?        : Extract<keyof E, string>
   auto?          : boolean
   selectable?    : boolean
@@ -94,8 +94,8 @@ const pageCount = computed(() => unref(data)?.pageCount || 0)
 const count     = computed(() => unref(data)?.count || 0)
 
 //  表头
-const _columns  = computed(() => {
-  const cols = columns.map<STableColumn<K, T>>((c) => {
+const _cols  = computed(() => {
+  const _cols = cols.map<STableColumn<K, T>>((c) => {
 
     return {
       ...c,
@@ -106,7 +106,7 @@ const _columns  = computed(() => {
   })
 
   if (operaWidth) {
-    cols.push({
+    _cols.push({
       // @ts-expect-error key 为内部字段
       key      : '__operation__',
       // @ts-expect-error key 为内部字段
@@ -117,12 +117,12 @@ const _columns  = computed(() => {
     })
   }
 
-  return cols
+  return _cols
 })
 
 const _scroll   = computed(() => {
   // 计算x轴滚动距离
-  let x = columns.reduce((acc, cur) => acc + (Number(cur.width) || 0), 0)
+  let x = cols.reduce((acc, cur) => acc + (Number(cur.width) || 0), 0)
 
   if (operaWidth) {
     x += Number(operaWidth) || 0
@@ -185,7 +185,7 @@ const getDataFn = async (options?: { onInvalidate?: () => void, lazy?: boolean }
         pageSize: reqConf.pageSize,
       }
 
-      const res = await dataFunc(page)
+      const res = await getData(page)
 
       reqConf.loading = false
 
@@ -274,7 +274,7 @@ const getTitleVNode = (title: string) => {
 
 // 获取字段值
 const getFiledValue = (record: E, key: Key | undefined): string => {
-  const col = columns.find(c => c.key === key)
+  const col = cols.find(c => c.key === key)
 
   if (!col) {
     return ''
@@ -362,7 +362,7 @@ if (auto) {
     <template v-else-if="list.length">
       <ATable
         :row-selection="_rowSelection"
-        :columns="_columns"
+        :columns="_cols"
         :scroll="_scroll"
         :data-source="list"
         :row-key="rowKey"
@@ -396,57 +396,3 @@ if (auto) {
     </template>
   </div>
 </template>
-
-<style lang="less" scoped>
-// :deep(tr.ant-table-row-selected) {
-//   td {
-//     background-color: white;
-//   }
-// }
-
-// .s-table {
-//   .ant-pagination-item-link {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//   }
-
-//   .table {
-//     .ant-table-body {
-//       .ant-table-thead {
-//         height: 40px;
-//       }
-//     }
-
-//     .ant-table-placeholder {
-//       display: none;
-//     }
-//   }
-
-//   .empty {
-//     display: flex;
-//     flex-direction: column;
-//     margin: 64px;
-//     align-items: center;
-//     justify-content: center;
-
-//     img {
-//       height: 100px;
-//     }
-
-//     span {
-//       font-size: 12px;
-//     }
-//   }
-
-//   .loading {
-//     height: 240px;
-//   }
-// }
-
-// li {
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-// }
-</style>

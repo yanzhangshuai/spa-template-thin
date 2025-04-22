@@ -5,7 +5,8 @@ import { createApp } from 'vue'
 import Service from '@/service'
 import App from '@/page/app.vue'
 import 'virtual:uno.css'
-import '@/assets/styles/app.less'
+
+import './app.less'
 
 preloadConfig().then((_) => {
   const app = createApp(App)
