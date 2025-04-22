@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useDemoService } from '@/service/demo'
+
 import Item from './home/component/item.vue'
 
 definePage({
@@ -6,6 +8,12 @@ definePage({
   meta    : {
     title: '首页',
   },
+})
+
+const demoService = useDemoService()
+
+demoService.list2().then((res) => {
+  console.log(res)
 })
 </script>
 

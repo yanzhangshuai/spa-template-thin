@@ -1,8 +1,14 @@
+import axios from 'axios'
 import { defineService } from '@/util/define'
 
 import type { Test1Dto } from './type'
 
-export const useTest1Service = defineService({
+export const useDemoService = defineService({
+
+  list2() {
+    return axios.get<string[]>('/api/demo/list')
+      .then(res => res.data)
+  },
 
   list() {
     return new Promise<PaginationRes<Test1Dto>>((resolve) => {

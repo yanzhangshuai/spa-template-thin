@@ -1,20 +1,61 @@
-FROM nginx:latest
-COPY ./dist /usr/share/nginx/html
-COPY ./deploy/nginx.conf /etc/nginx
-COPY ./deploy/mime.types /etc/nginx
 
-# 创建存放sh文件目录
-RUN mkdir /etc/nginx/sh
-# 将 sh 文件 copy 到 镜像文件
-COPY ./deploy/variable.sh /etc/nginx/sh
+# 阶段1: 基础配置
+FROM node:22-slim AS base
 
-# 设置环境变量初始值
-ENV API_SERVER=https://api.mwjz.live/
-ENV FILE_SERVER=https://static.mwjz.live/
+ARG ALLOWED_PM=npm
+ARG REGISTRY_URL=https://registry.npmjs.org/
 
-# 设置variable.sh 执行权限
-RUN chmod a+x /etc/nginx/sh/variable.sh
-# 执行sh文件
-RUN ["sh", "/etc/nginx/sh/variable.sh"]
-# 容器应用端口
+WORKDIR /app
+
+COPY package*.json .npmrc* ./
+COPY pnpm-lock.yaml* yarn.lock* package-lock.json* ./ 
+
+# 自动检包管理器类型 配置仓库
+RUN sed -i "s/\"preinstall\": \".*\"/\"preinstall\": \"npx only-allow ${ALLOWED_PM}\"/" package.json && \
+    echo "registry=${REGISTRY_URL}" > .npmrc && \
+    [ -n "${NPM_AUTH}" ] && echo "//${REGISTRY_URL#*://}:_authToken=${NPM_AUTH}" >> .npmrc || true
+
+
+# 阶段2: 安装阶段   
+FROM base AS builder
+COPY --from=base /app ./node_modules
+
+
+# 根据 ALLOWED_PM 选择安装方式
+RUN case "${ALLOWED_PM}" in \
+    "pnpm") \
+      [ -f "pnpm-lock.yaml" ] || { echo "Error: pnpm-lock.yaml not found"; exit 1; } && \
+      npm install -g pnpm --registry=${REGISTRY_URL} && \
+      pnpm install --frozen-lockfile --registry=${REGISTRY_URL} ;; \
+    "yarn") \
+      [ -f "yarn.lock" ] || { echo "Error: yarn.lock not found"; exit 1; } && \
+      npm install -g yarn --registry=${REGISTRY_URL} && \
+      yarn install --frozen-lockfile --registry=${REGISTRY_URL} ;; \
+    *) \
+      [ -f "package-lock.json" ] || { echo "Error: package-lock.json not found"; exit 1; } && \
+      npm ci --registry=${REGISTRY_URL} ;; \
+    esac
+
+
+COPY . .
+RUN ${ALLOWED_PM} run build:gz
+
+
+# 阶段2: 生产阶段
+FROM nginx:alpine-slim
+
 EXPOSE 80
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+RUN mkdir -p /etc/nginx/templates /etc/nginx/conf.d
+
+COPY ./deploy/nginx.conf /etc/nginx/nginx.conf
+COPY ./deploy/templates /etc/nginx/templates/
+COPY ./deploy/entrypoint.sh /
+
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

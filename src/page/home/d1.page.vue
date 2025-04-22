@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useTest1Service } from '@/service/test1'
+import { useDemoService } from '@/service/demo'
 import { onMounted, unref, useTemplateRef } from 'vue'
 import { defineSTableColumns } from '@/component/s-table/index.vue'
 
-const t1Service = useTest1Service()
+const t1Service = useDemoService()
 
 const tableRef = useTemplateRef('table')
 

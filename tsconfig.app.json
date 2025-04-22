@@ -5,7 +5,7 @@
     "target": "ESNext",
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "moduleDetection": "force",
     "useDefineForClassFields": true,
     "baseUrl": "./",

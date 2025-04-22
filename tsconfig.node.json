@@ -22,6 +22,6 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "src/service/test1"
+    "src/service/demo"
   ]
 }

@@ -3,7 +3,7 @@ export const devConf = {
   open : false,
   https: false,
   proxy: {
-    '/api': 'https://api.mwjz.live',
+    '/api': 'http://127.0.0.1:4317/',
   },
 }
 
