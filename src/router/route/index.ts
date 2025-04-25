@@ -1,8 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { defineRoute } from '@/util/define'
+import { defineRoute } from '@/utils/define'
 import { flatten, isArray } from 'lodash-es'
-import { moduleFilter } from '@/util/module'
+import { moduleFilter } from '@/utils/module'
 import { routes as vRoutes } from 'vue-router/auto-routes'
 
 type Route = RouteRecordRaw | RouteRecordRaw[]

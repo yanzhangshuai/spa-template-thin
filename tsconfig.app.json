@@ -30,6 +30,7 @@
       "unplugin-vue-router/client"
     ],
     "allowImportingTsExtensions": true,
+    "allowJs": true,
 
     /* Linting */
     "strict": true,

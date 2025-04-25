@@ -1,4 +1,4 @@
-import { definePlugin } from '@/util/define'
+import { definePlugin } from '@/utils/define'
 
 export default definePlugin({
   install() {

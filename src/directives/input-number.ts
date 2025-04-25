@@ -1,4 +1,4 @@
-import { defineDirective } from '@/util/define'
+import { defineDirective } from '@/utils/define'
 
 export default defineDirective({
   mounted(el: HTMLInputElement): void {

@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 
-import { definePlugin } from '@/util/define'
+import { definePlugin } from '@/utils/define'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import routes from './route'

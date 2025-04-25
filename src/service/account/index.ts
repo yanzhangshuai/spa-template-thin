@@ -1,4 +1,4 @@
-import { defineService } from '@/util/define'
+import { defineService } from '@/utils/define'
 
 export const useAccountService = defineService({
   getUserInfo() {

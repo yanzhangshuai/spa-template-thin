@@ -5,10 +5,12 @@ import UnoCSS from 'unocss/vite'
 import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
 import { kebabCase } from 'lodash-es'
+import Inspect from 'vite-plugin-inspect'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { imagetools } from 'vite-imagetools'
 import ViteRestart from 'vite-plugin-restart'
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import VueRouter from 'unplugin-vue-router/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -21,6 +23,11 @@ import { devConf } from './config'
 
 export default function setupPlugin() {
   const plugins: Array<PluginOption | PluginOption[]> = [
+
+    tsconfigPaths({
+      projects: ['./tsconfig.app.json'],
+      loose   : true,
+    }),
     ViteRestart({ restart: ['src/styles/theme/*.less'] }),
 
     UnoCSS(),
@@ -60,12 +67,18 @@ export default function setupPlugin() {
     vueDevTools({
       componentInspector: true,
       launchEditor      : 'code',
-
     }),
   ]
 
   if (devConf.https) {
     plugins.push(basicSsl({ name: 'dev', domains: ['*.com'] }))
+  }
+
+  if (process.env.VITE_INSPECT === 'true') {
+    plugins.push(Inspect({
+      build    : true,
+      outputDir: '.vite-inspect',
+    }))
   }
 
   if (process.env.VITE_GZIP === 'true') {

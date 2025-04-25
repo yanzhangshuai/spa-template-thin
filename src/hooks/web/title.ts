@@ -2,7 +2,7 @@ import { unref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTitle } from '@vueuse/core'
 
-export function usePageTitle(): void {
+export default function usePageTitle() {
   const { currentRoute } = useRouter()
 
   const title = useTitle()

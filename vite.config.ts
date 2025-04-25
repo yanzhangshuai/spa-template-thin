@@ -4,14 +4,14 @@ import { defineConfig } from 'vite'
 import { devConf } from './build/config'
 import setupPlugin from './build/plugins'
 import { configProxy } from './build/utils'
-import { tsconfigAlias } from './build/tsconfig.alias'
 
 export default defineConfig((config) => {
   process.env.VITE_ENV = config.mode as 'development' | 'production' | 'test'
 
   return {
 
-    css: {
+    base: './',
+    css : {
       preprocessorOptions: {
         less: {
           additionalData: `
@@ -46,10 +46,6 @@ export default defineConfig((config) => {
           },
         },
       },
-    },
-
-    resolve: {
-      alias: tsconfigAlias('tsconfig.app.json'),
     },
 
     server: {

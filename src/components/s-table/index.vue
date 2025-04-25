@@ -28,7 +28,7 @@ import type { GetComponentProps } from 'ant-design-vue/es/vc-table/interface'
 
 import { isNil } from 'lodash-es'
 import { set } from '@vueuse/core'
-import { isFalsyExceptZero } from '@/util/is'
+import { isFalsyExceptZero } from '@/utils/is'
 import { computed, h, reactive, ref, unref, useSlots } from 'vue'
 
 const {

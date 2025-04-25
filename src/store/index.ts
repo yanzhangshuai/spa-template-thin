@@ -1,7 +1,7 @@
 import type { App } from 'vue'
 
 import { createPinia } from 'pinia'
-import { definePlugin } from '@/util/define'
+import { definePlugin } from '@/utils/define'
 
 export default definePlugin({
   install(app: App) {

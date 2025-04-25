@@ -3,11 +3,9 @@ import Plugin from '@/plugin'
 import Router from '@/router'
 import { createApp } from 'vue'
 import Service from '@/service'
-
-import App from './app.vue'
-
 import 'virtual:uno.css'
 
+import App from './app.vue'
 import './app.less'
 
 preloadConfig().then((_) => {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { defineService } from '@/util/define'
+import { defineService } from '@/utils/define'
 
 import type { Test1Dto } from './type'
 

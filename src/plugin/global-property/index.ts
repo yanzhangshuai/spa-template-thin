@@ -1,5 +1,5 @@
-import { dateFormat } from '@/util/date'
-import { definePlugin } from '@/util/define'
+import { dateFormat } from '@/utils/date'
+import { definePlugin } from '@/utils/define'
 
 let globalProps: DeepReadonly<AppProps>
 
