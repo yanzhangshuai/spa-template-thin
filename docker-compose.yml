@@ -1,16 +1,16 @@
-version: "3.9"
+version: '3.9'
 
 services:
   app:
     image: spa-template-thin
     build:
-      context: ../
+      context: ./
       dockerfile: ./deploy/Dockerfile
       args:
         ALLOWED_PM: pnpm
         REGISTRY_URL: https://registry.npmmirror.com
     container_name: spa-template-thin
     ports:
-      - "3416:80"
+      - '3416:80'
     restart: always
     network_mode: bridge

@@ -17,17 +17,16 @@ import { compression } from 'vite-plugin-compression2'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
-import { devConf } from '../config'
+import { devConf } from './config'
 
-export default () => {
+export default function setupPlugin() {
   const plugins: Array<PluginOption | PluginOption[]> = [
-    ViteRestart({ restart: ['src/assets/styles/theme/*.less'] }),
+    ViteRestart({ restart: ['src/styles/theme/*.less'] }),
 
     UnoCSS(),
 
     Components({
-      dirs                : ['src/component', 'src/directive'],
-      dts                 : './src/component/components.d.ts',
+      dirs                : ['src/components', 'src/directives'],
       directoryAsNamespace: true,
       globalNamespaces     : ['global'],
       resolvers           : [
@@ -37,17 +36,15 @@ export default () => {
           resolve:  (name) => {
             const filename = `${kebabCase(name)}.ts`
 
-            const exist = fs.existsSync(`src/directive/${filename}`)
+            const exist = fs.existsSync(`src/directives/${filename}`)
 
-            return exist ? `@/directive/${filename}` : null
+            return exist ? `@/directives/${filename}` : null
           },
         },
       ],
     }),
     VueRouter({
-      extensions  : ['.page.vue'],
-      routesFolder: ['src/page'],
-      dts         : 'src/router/typed-router.d.ts',
+      extensions: ['.page.vue'],
     }),
     vue(),
     vueJsx({ optimize: true, transformOn: true }),
@@ -56,12 +53,9 @@ export default () => {
     viteStaticCopy({
       targets: [
         { src: 'config.json', dest: '' },
-        // { src: 'src/assets/!(style)', dest: './assets' },
       ],
 
     }),
-
-    // tsconfigPaths(),
 
     vueDevTools({
       componentInspector: true,
@@ -84,7 +78,6 @@ export default () => {
       gzipSize  : true,
       brotliSize: true,
       template  : 'treemap', // "sunburst" | "treemap" | "network",
-      filename  : './report/stats.html',
     }))
   }
 

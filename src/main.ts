@@ -3,7 +3,9 @@ import Plugin from '@/plugin'
 import Router from '@/router'
 import { createApp } from 'vue'
 import Service from '@/service'
-import App from '@/page/app.vue'
+
+import App from './app.vue'
+
 import 'virtual:uno.css'
 
 import './app.less'

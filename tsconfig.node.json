@@ -17,11 +17,9 @@
   "include": [
     "build/**/*.ts",
     "build/**/*.d.ts",
-    "test/**/*.ts",
-    "test/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "src/service/demo"
+    "vite.config.ts"
   ]
 }

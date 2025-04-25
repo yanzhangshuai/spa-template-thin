@@ -9,7 +9,7 @@ type ThemeColor = Recordable<Recordable<string>>
  * 解析主题文件
  * @param path
  */
-export function themeParse(path = 'src/assets/styles/theme'): ThemeColor {
+export function themeParse(path = 'src/styles/theme'): ThemeColor {
   // 去除path的最后一个斜杠
   if (path.endsWith('/')) {
     path = path.slice(0, -1)

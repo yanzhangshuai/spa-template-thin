@@ -2,7 +2,7 @@ import { createVNode } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import ConfigProvider from '../../src/component/s-config-provider/index.vue'
+import ConfigProvider from './index.vue'
 
 describe('s-config-provider', () => {
   it('component exist', () => {

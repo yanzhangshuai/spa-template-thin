@@ -1,6 +1,6 @@
 import { defineConfig, presetAttributify, presetUno, transformerDirectives } from 'unocss'
 
-import { themeParse } from './build/util/theme'
+import { themeParse } from './build/theme'
 
 export default defineConfig({
 

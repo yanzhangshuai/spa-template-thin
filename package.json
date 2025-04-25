@@ -8,16 +8,14 @@
   "web-types": "./src/components/web-types.json",
   "scripts": {
     "preinstall": "npx only-allow <allowed-pm>",
-    "vite-build": "vite build --config ./build/vite.config.ts",
-    "dev": "vite --config ./build/vite.config.ts",
-    "build": "vue-tsc -b && npm-run-all vite-build",
-    "build:gz": "cross-env VITE_GZIP=true vite build --config ./build/vite.config.ts",
-    "serve": "npm-run-all vite-build && vite preview --config ./build/vite.config.ts",
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "build:gz": "cross-env VITE_GZIP=true vite build",
+    "serve": "vite build && vite preview",
     "deploy": "docker-compose -f ./deploy/docker-compose.yml up -d",
-    "report": "cross-env VITE_REPORT=true vite build --config ./build/vite.config.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "test": "vitest --passWithNoTests --config ./test/vitest.config.ts"
+    "report": "cross-env VITE_REPORT=true vite build",
+    "lint": "eslint . --fix",
+    "test": "vitest --passWithNoTests"
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.74.5",
@@ -46,10 +44,8 @@
     "@vue/test-utils": "^2.4.6",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globby": "^14.1.0",
     "jsdom": "^26.1.0",
-    "npm-run-all": "^4.1.5",
     "only-allow": "^1.2.1",
     "rollup": "^4.40.0",
     "rollup-plugin-visualizer": "^5.14.0",
@@ -62,7 +58,6 @@
     "vite-plugin-restart": "^0.4.2",
     "vite-plugin-static-copy": "^2.3.1",
     "vite-plugin-vue-devtools": "^7.7.5",
-    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.1.1",
     "vue-tsc": "^2.2.8"
   }

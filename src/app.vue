@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { usePageTitle } from '@/hook/web/title'
+import { usePageTitle } from '@/hooks/web/title'
 
 usePageTitle()
 </script>
