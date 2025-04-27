@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: ./deploy/Dockerfile
       args:
-        ALLOWED_PM: pnpm
+        # ALLOWED_PM: pnpm
         REGISTRY_URL: https://registry.npmmirror.com
     container_name: spa-template-thin
     ports:

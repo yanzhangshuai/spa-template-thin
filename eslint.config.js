@@ -9,7 +9,7 @@ export default antfu(
         'vue/component-definition-name-casing'       : ['error', 'PascalCase'],
         'vue/component-name-in-template-casing'      : ['error', 'PascalCase', {
           registeredComponentsOnly: false,
-          ignores                 : [],
+          ignores                                    : [],
         }],
         'vue/block-lang': [
           'error',

@@ -64,11 +64,10 @@ export default defineConfig((config) => {
     test: {
       globals    : true,
       environment: 'jsdom',
-      include    : ['**/*.{test,spec}.ts'],
+      include    : ['**/*.test.ts'],
       coverage   : {
-        extensions: ['.vue'],
-        all             : true,
-        reporter  : ['text', 'json', 'html'],
+        all     : true,
+        reporter: ['text', 'json', 'html'],
       },
       inspectBrk     : true,
       fileParallelism: false,
