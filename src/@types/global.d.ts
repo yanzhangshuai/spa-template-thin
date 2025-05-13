@@ -130,3 +130,5 @@ declare type ExtractPromiseType<T> = T extends Promise<infer R> ? R : never
 
 type ComponentExports<D extends (...p: any[]) => any> = import('vue').ComponentPublicInstance &
   Parameters<NonNullable<NonNullable<ReturnType<D>['__ctx']>['expose']>>[0]
+
+declare type ValueOf<T> = T[keyof T]

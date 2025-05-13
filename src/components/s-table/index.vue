@@ -1,4 +1,17 @@
 <script lang="ts">
+// 扩展字段
+interface ExtendsField {
+  __operation__: '操作'
+}
+
+type ExtendsKeyType<K extends Recordable<string>> = K & {
+  [key in keyof ExtendsField] : any
+}
+
+type ExtendsTitleType<T extends Recordable<any>> = T & {
+  [key in ValueOf<ExtendsField>]: any
+}
+
 type STableColumn<K extends Record<string, any>, T extends Record<string, any>> = ColumnProps & {
   key    : Extract<keyof K, string>
   title  : Extract<keyof T, string>
@@ -67,16 +80,13 @@ T = Title   col列的title
      changed: [count: number]
   }>()
 
-  // col插槽
   defineSlots<{
-    [key in keyof K]: (val: { record: E }) => VNode[]
+    // col插槽
+    [key in keyof ExtendsKeyType<K>]: (val: { record: E }) => VNode[]
   } & {
     // title插槽
     [key in keyof T]: () => VNode[]
 
-  } & {
-    // 操作插槽
-    __operation__: (val: { record: E }) => VNode[]
   }>()
 
   // 定义selectKeys
@@ -102,7 +112,11 @@ T = Title   col列的title
 
   //  表头
   const _cols = computed(() => {
-    const _cols = cols.map<STableColumn<K, T>>((c) => {
+
+    if (!cols?.length)
+      return []
+
+    const mappedCols = cols.map<STableColumn<ExtendsKeyType<K>, ExtendsTitleType<T>>>((c) => {
 
       return {
         ...c,
@@ -113,10 +127,8 @@ T = Title   col列的title
     })
 
     if (operaWidth) {
-      _cols.push({
-        // @ts-expect-error key 为内部字段
+      mappedCols.push({
         key: '__operation__',
-        // @ts-expect-error key 为内部字段
         title: '操作',
         dataIndex: '__operation__',
         width: Number(operaWidth) || 0,
@@ -124,16 +136,16 @@ T = Title   col列的title
       })
     }
 
-    return _cols
+    return mappedCols
   })
 
   const _scroll = computed(() => {
-    // 计算x轴滚动距离
-    let x = cols.reduce((acc, cur) => acc + (Number(cur.width) || 0), 0)
 
-    if (operaWidth) {
-      x += Number(operaWidth) || 0
-    }
+    if (!cols?.length)
+      return { x: 0 }
+
+    // 计算x轴滚动距离
+     const x = cols.reduce((acc, cur) => acc + (Number(cur.width) || 0), 0) + (Number(operaWidth) || 0)
 
     return { x }
   })
@@ -246,12 +258,14 @@ T = Title   col列的title
   }
 
   // 获取字段值
-  const getFiledValue = (record: E, key: Key | undefined): string => {
-    const col = cols.find(c => c.key === key)
+  const getFiledVal = (record: E, key: Key | undefined): string => {
 
-    if (!col) {
+    if (!key)
       return ''
-    }
+
+    const col = cols.find(c => c.key === key)
+    if (!col)
+      return ''
 
     // 支持多级字段
     const f = col.key
@@ -276,30 +290,23 @@ T = Title   col列的title
     return col.defVal || ''
   }
 
-  const getVal = (key: Key | undefined, record: E) => {
-    if (!key) {
+  const getVal = (record: E, key: Key | undefined) => {
+    if (!key)
       return []
-    }
 
     const slot = slots[key]
-
-    // 不存在插槽则直接返回值
     if (!slot) {
-      const val = getFiledValue(record, key)
-
+      const val = getFiledVal(record, key)
       return h('li', { tabindex: '-1', title: val }, val)
     }
 
     const vNode = slot({ record })
     vNode.forEach((v) => {
       //  TODO:??? antdv-table 具有一个bug，不具有tabindex属性的元素关闭弹窗会滚动到title，所有在此默认节点具有一个-1的tabindex
-      if (!v.props) {
+      if (!v.props)
         v.props = {}
-      }
-
-      if (isNil(v.props.tabindex)) {
+      if (isNil(v.props.tabindex))
         v.props.tabindex = '-1'
-      }
     })
 
     return vNode
@@ -335,7 +342,7 @@ T = Title   col列的title
       </template>
 
       <template #bodyCell="{ column, record }">
-        <SVNode :nodes="getVal(column.key, record as E)" />
+        <SVNode :nodes="getVal(record as E, column.key)" />
       </template>
     </ATable>
   </div>
