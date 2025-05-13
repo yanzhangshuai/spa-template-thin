@@ -11,6 +11,7 @@ import { imagetools } from 'vite-imagetools'
 import ViteRestart from 'vite-plugin-restart'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { viteMockServe } from 'vite-plugin-mock'
 import VueRouter from 'unplugin-vue-router/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -28,6 +29,8 @@ export default function setupPlugin() {
       projects: ['./tsconfig.app.json'],
       loose   : true,
     }),
+
+    viteMockServe(),
     ViteRestart({ restart: ['src/styles/theme/*.less'] }),
 
     UnoCSS(),

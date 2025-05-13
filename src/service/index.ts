@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { definePlugin } from '@/utils/define'
 
 export default definePlugin({
@@ -7,5 +8,6 @@ export default definePlugin({
 })
 
 function setup() {
+  axios.defaults.baseURL = '/api'
   // setupInterceptor(axios.interceptors);
 }

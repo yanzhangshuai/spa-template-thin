@@ -15,8 +15,10 @@
     "skipLibCheck": true
   },
   "include": [
+    "*.d.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
+    "mock/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",

@@ -14,25 +14,31 @@ const cols = defineSTableColumns([
   { key: 'createdAt',   title: '创建时间' },
 ])
 
-const getData = () => {
-  return t1Service.list()
+const getData = (pageReq: PaginationReq) => {
+  return t1Service.list(pageReq)
 }
 
 onMounted(() => {
-  unref(tableRef)?.data?.items?.forEach?.((d) => {
+  unref(tableRef)?.items?.forEach?.((d) => {
     console.log(d.name)
   })
 })
+
+const onClick = () => {
+  unref(tableRef)?.reload()
+}
 </script>
 
 <template>
+  <button @click="onClick">重新加载</button>
+
   <STable
     ref="table"
     auto
     row-key="id"
     opera-width="200"
     :cols="cols"
-    :get-data="getData"
+    :query-fn="getData"
   >
     <template #createdAt="{ record }">
       {{ $app.dateFormat(record.createdAt) }}
